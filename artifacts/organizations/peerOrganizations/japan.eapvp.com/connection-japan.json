@@ -1,0 +1,49 @@
+{
+    "name": "upov-network-japan",
+    "version": "1.0.0",
+    "client": {
+        "organization": "Japan",
+        "connection": {
+            "timeout": {
+                "peer": {
+                    "endorser": "300"
+                }
+            }
+        }
+    },
+    "organizations": {
+        "Japan": {
+            "mspid": "JapanMSP",
+            "peers": [
+                "peer0.japan.eapvp.com"
+            ],
+            "certificateAuthorities": [
+                "ca.japan.eapvp.com"
+            ]
+        }
+    },
+    "peers": {
+        "peer0.japan.eapvp.com": {
+            "url": "grpcs://localhost:7051",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICIjCCAcmgAwIBAgIUYHUP+WbQpQGffYFF4LF1k0pw+oMwCgYIKoZIzj0EAwIw\nbjELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMQ8wDQYDVQQH\nEwZEdXJoYW0xGDAWBgNVBAoTD2phcGFuLmVhcHZwLmNvbTEbMBkGA1UEAxMSY2Eu\namFwYW4uZWFwdnAuY29tMB4XDTIzMDEyNDE1MzgwMFoXDTM4MDEyMDE1MzgwMFow\nbjELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMQ8wDQYDVQQH\nEwZEdXJoYW0xGDAWBgNVBAoTD2phcGFuLmVhcHZwLmNvbTEbMBkGA1UEAxMSY2Eu\namFwYW4uZWFwdnAuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEnTNrFw9s\nLzpoFxngsehotC0ca7ThaNWuHVAHEX6mVLStavm8DydsqN3rAl6T6c5ji5LVNusz\n4bxSg2wAHxqOW6NFMEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8C\nAQEwHQYDVR0OBBYEFOUTGMgmtNhkvrzK8zJbIn8ODm+EMAoGCCqGSM49BAMCA0cA\nMEQCIAMzfSxvzr8sBxEjwmN1IJlm+f8zkjTD/gp9qvO5F9CiAiA83kN/eP2ePPuV\ngXarScJjpLPJN+uqbflC1kDOKeawNQ==\n-----END CERTIFICATE-----\n"
+            },
+            "grpcOptions": {
+                "ssl-target-name-override": "peer0.japan.eapvp.com",
+                "hostnameOverride": "peer0.japan.eapvp.com"
+            }
+        }
+    },
+    "certificateAuthorities": {
+        "ca.japan.eapvp.com": {
+            "url": "https://localhost:7054",
+            "caName": "ca-japan",
+            "tlsCACerts": {
+                "pem": "-----BEGIN CERTIFICATE-----\nMIICIjCCAcmgAwIBAgIUYHUP+WbQpQGffYFF4LF1k0pw+oMwCgYIKoZIzj0EAwIw\nbjELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMQ8wDQYDVQQH\nEwZEdXJoYW0xGDAWBgNVBAoTD2phcGFuLmVhcHZwLmNvbTEbMBkGA1UEAxMSY2Eu\namFwYW4uZWFwdnAuY29tMB4XDTIzMDEyNDE1MzgwMFoXDTM4MDEyMDE1MzgwMFow\nbjELMAkGA1UEBhMCVVMxFzAVBgNVBAgTDk5vcnRoIENhcm9saW5hMQ8wDQYDVQQH\nEwZEdXJoYW0xGDAWBgNVBAoTD2phcGFuLmVhcHZwLmNvbTEbMBkGA1UEAxMSY2Eu\namFwYW4uZWFwdnAuY29tMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAEnTNrFw9s\nLzpoFxngsehotC0ca7ThaNWuHVAHEX6mVLStavm8DydsqN3rAl6T6c5ji5LVNusz\n4bxSg2wAHxqOW6NFMEMwDgYDVR0PAQH/BAQDAgEGMBIGA1UdEwEB/wQIMAYBAf8C\nAQEwHQYDVR0OBBYEFOUTGMgmtNhkvrzK8zJbIn8ODm+EMAoGCCqGSM49BAMCA0cA\nMEQCIAMzfSxvzr8sBxEjwmN1IJlm+f8zkjTD/gp9qvO5F9CiAiA83kN/eP2ePPuV\ngXarScJjpLPJN+uqbflC1kDOKeawNQ==\n-----END CERTIFICATE-----\n"
+            },
+            "httpOptions": {
+                "verify": false
+            }
+        }
+    }
+}

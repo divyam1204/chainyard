@@ -1,0 +1,6 @@
+Installed chaincodes on peer:
+Package ID: jppvppchain_1:25b90f6b4ece719563fbe9eb794c88f6fd9bf6ef0675286f3b9227b24dfb0456, Label: jppvppchain_1
+Package ID: jppvppchain_2:ce5df089a437baecafeb17c85d016192fd38a52c1cc86026647ffdb9cf50a94d, Label: jppvppchain_2
+Package ID: jppvppchain_3:617c264be8bcca398f63e4eead51a8c8854664654c9b66e90f84166e4af25504, Label: jppvppchain_3
+Package ID: jppvppchain_4:3f8d75bd47e50e1e49441f87f2c084e58b19d8a6c30013b81de59cbfdf220297, Label: jppvppchain_4
+Package ID: jppvppchain_5:e7031d0f71530393ff9c7024fab33ea06a68593ace2530d847d867bf1c8b71a3, Label: jppvppchain_5
