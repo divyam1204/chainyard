@@ -4,14 +4,12 @@ const submitUserController = require('../../controller/submitUserController');
 const submitCarController = require('../../controller/submitCarController');
 const sellCarController = require('../../controller/sellCarController');
 const getCarDetailsController = require('../../controller/getCarDetailsController');
-const readyToSellController = require('../../controller/readyToSellController');
 
 // Validators
 const submitCarUserValidator = require('../../middlewares/validations/submitUserValidator');
 const submitCarValidator = require('../../middlewares/validations/submitCarValidator');
 const sellCarValidator = require('../../middlewares/validations/sellCarValidator');
 const getCarDetailsValidator = require('../../middlewares/validations/getCarDetailsValidator');
-const readyToSellValidator = require('../../middlewares/validations/readyToSellValidator');
 
 const config = require('../../config/config.json');
 const constants = require('../../config/constants.json');
@@ -54,27 +52,6 @@ router.post(
   submitCarValidator.submitCarValidation('submitCar'),
   async (req, res) => {
     submitCarController.submitCar(
-      config.totalRetryAttempts,
-      config.retryDelaySeconds,
-      req,
-      res
-    );
-  }
-);
-
-/**
- *
- * Receives API call to sell car and forwards request to
- * controllers after setting the validators
- *
- * @param {} '/sell-car'
- * @param {} 'sellCarValidator.sellCarValidation('sellCar')'
- */
-router.post(
-  '/ready-to-sell',
-  readyToSellValidator.readyToSellValidation('readyToSell'),
-  async (req, res) => {
-    readyToSellController.readyToSell(
       config.totalRetryAttempts,
       config.retryDelaySeconds,
       req,

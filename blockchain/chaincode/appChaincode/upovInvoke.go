@@ -70,7 +70,7 @@ func (t *ChainCode) SubmitCar(ctx contractapi.TransactionContextInterface, data 
     if len(userQueryResults) != 0 {
 
 		if( userQueryResults[0].Role == "manufacturer"){
-			Car.Status = "CREATED"
+			Car.Status = "manufactured"
 			val, err := json.Marshal(Car)
 			if err != nil {
 				return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
@@ -86,63 +86,6 @@ func (t *ChainCode) SubmitCar(ctx contractapi.TransactionContextInterface, data 
 		}
     }
 	return t.FmtTransactionResponse(true, "CAR_SUBMITTED"), nil
-	
-}
-
-func (t *ChainCode) ReadyToDeliver(ctx contractapi.TransactionContextInterface, data string) (*TransactionResponse, error) {
-	var Car CarDetails
-
-	err := json.Unmarshal([]byte(data), &Car)
-	if err != nil {
-		return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
-	}
-
-	Car.ObjectType = "Car"
-
-	queryString := fmt.Sprintf("{\"selector\" : {\"$and\" : [{\"objectType\" :  \"Car\" }, {\"carID\" : \"" + Car.CarID + "\"} ]} }")
-
-	queryResults, err := t.GetQueryResultForQueryStringCar(ctx, queryString)
-	if err != nil {
-		return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
-	}	
-    if len(queryResults) == 0 {
-        return t.FmtTransactionResponse(false, "CAR_DO_NOT_EXIST"), nil
-    }
-
-	
-	userQueryString := fmt.Sprintf("{\"selector\" : {\"$and\" : [{\"objectType\" :  \"User\" }, {\"userID\" : \"" + Car.Manufacturer.UserID + "\"}, {\"email\" : \"" + Car.Manufacturer.Email + "\"} ]} }")
-
-	userQueryResults, err := t.GetQueryResultForQueryStringUser(ctx, userQueryString)
-	if err != nil {
-		return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
-	}
-	if len(userQueryResults) == 0 {
-        return t.FmtTransactionResponse(false, "USER_NOT_AUTHORIZED"), nil
-    }	
-    if len(userQueryResults) != 0 {
-		if(queryResults[0].Manufacturer.UserID == Car.Manufacturer.UserID){
-			if( userQueryResults[0].Role == "manufacturer"){
-				queryResults[0].Status = "READY_FOR_SALE"
-				queryResults[0].Seller = Car.Seller
-				val, err := json.Marshal(queryResults[0])
-				if err != nil {
-					return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
-				}
-	
-				err = ctx.GetStub().PutState(queryResults[0].CarID, val)
-				if err != nil {
-					return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
-				}
-				return t.FmtTransactionResponse(true, "CAR_SOLD"), nil
-			} else{
-				return t.FmtTransactionResponse(false, "USER_NOT_AUTHORIZED"), nil
-			}
-		} else {
-			return t.FmtTransactionResponse(false, "USER_NOT_AUTHORIZED"), nil
-		}
-		
-    }
-	return t.FmtTransactionResponse(true, "CAR_SOLD"), nil
 	
 }
 
@@ -177,28 +120,24 @@ func (t *ChainCode) SellCar(ctx contractapi.TransactionContextInterface, data st
         return t.FmtTransactionResponse(false, "USER_NOT_AUTHORIZED"), nil
     }	
     if len(userQueryResults) != 0 {
-		if(queryResults[0].Seller.UserID == Car.Seller.UserID){
-			if( userQueryResults[0].Role == "seller"){
-				queryResults[0].Status = "SOLD"
-				queryResults[0].Seller = Car.Seller
-				queryResults[0].Owner = Car.Owner
-				val, err := json.Marshal(queryResults[0])
-				if err != nil {
-					return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
-				}
-	
-				err = ctx.GetStub().PutState(queryResults[0].CarID, val)
-				if err != nil {
-					return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
-				}
-				return t.FmtTransactionResponse(true, "CAR_SOLD"), nil
-			} else{
-				return t.FmtTransactionResponse(false, "USER_NOT_AUTHORIZED"), nil
+
+		if( userQueryResults[0].Role == "seller"){
+			queryResults[0].Status = "Sold"
+			queryResults[0].Seller = Car.Seller
+			queryResults[0].Owner = Car.Owner
+			val, err := json.Marshal(queryResults[0])
+			if err != nil {
+				return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
 			}
+
+			err = ctx.GetStub().PutState(queryResults[0].CarID, val)
+			if err != nil {
+				return t.FmtTransactionResponse(false, "BLOCKCHAIN_RUNTIME_ERROR"), err
+			}
+			return t.FmtTransactionResponse(true, "CAR_SOLD"), nil
 		} else{
 			return t.FmtTransactionResponse(false, "USER_NOT_AUTHORIZED"), nil
 		}
-		
     }
 	return t.FmtTransactionResponse(true, "CAR_SOLD"), nil
 	
